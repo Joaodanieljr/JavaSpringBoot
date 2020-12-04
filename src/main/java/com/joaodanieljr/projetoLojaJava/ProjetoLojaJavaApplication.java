@@ -1,13 +1,31 @@
 package com.joaodanieljr.projetoLojaJava;
 
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class ProjetoLojaJavaApplication {
+import com.joaodanieljr.projetoLojaJava.domain.Categoria;
+import com.joaodanieljr.projetoLojaJava.repositories.CategoriaRepository;
 
+@SpringBootApplication
+public class ProjetoLojaJavaApplication implements CommandLineRunner {
+	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoLojaJavaApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		Categoria cat1 = new Categoria(null, "Informatica");
+		Categoria cat2 = new Categoria(null, "Escritorio");
+		
+		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
 	}
 
 }
