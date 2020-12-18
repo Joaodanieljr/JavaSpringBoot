@@ -1,5 +1,6 @@
 package com.joaodanieljr.projetoLojaJava;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.joaodanieljr.projetoLojaJava.domain.Cidade;
 import com.joaodanieljr.projetoLojaJava.domain.Cliente;
 import com.joaodanieljr.projetoLojaJava.domain.Endereco;
 import com.joaodanieljr.projetoLojaJava.domain.Estado;
+import com.joaodanieljr.projetoLojaJava.domain.Pagamento;
+import com.joaodanieljr.projetoLojaJava.domain.PagamentoComBoleto;
+import com.joaodanieljr.projetoLojaJava.domain.PagamentoComCartao;
+import com.joaodanieljr.projetoLojaJava.domain.Pedido;
 import com.joaodanieljr.projetoLojaJava.domain.Produto;
+import com.joaodanieljr.projetoLojaJava.domain.enums.EstadoPagamento;
 import com.joaodanieljr.projetoLojaJava.domain.enums.TipoCliente;
 import com.joaodanieljr.projetoLojaJava.repositories.CategoriaRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.CidadeRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.ClienteRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.EnderecoRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.EstadoRepository;
+import com.joaodanieljr.projetoLojaJava.repositories.PagamentoRepository;
+import com.joaodanieljr.projetoLojaJava.repositories.PedidoRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -42,6 +50,12 @@ public class ProjetoLojaJavaApplication implements CommandLineRunner  {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoLojaJavaApplication.class, args);
@@ -95,6 +109,26 @@ public class ProjetoLojaJavaApplication implements CommandLineRunner  {
 		clienteRepository.saveAll(Arrays.asList(cl1, cl2));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido pd1 = new Pedido(null, sdf.parse("30/09/2020 20:15"), cl1, e1);
+		Pedido pd2 = new Pedido(null, sdf.parse("18/12/2020 00:11"), cl1, e2);
+		Pedido pd3 = new Pedido(null, sdf.parse("10/12/2020 00:56"), cl2, e3);
+		
+		Pagamento pg1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pd1, 3);
+		pd1.setPagamento(pg1);
+		
+		Pagamento pg2 = new PagamentoComCartao(null, EstadoPagamento.CANCELADO, pd2, 6);
+		pd2.setPagamento(pg2);
+		
+		Pagamento pg3 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pd3, sdf.parse("10/12/2020 00:56"), null);
+		pd3.setPagamento(pg3);
+		
+		cl1.getPedidos().addAll(Arrays.asList(pd1, pd2));
+		cl2.getPedidos().addAll(Arrays.asList(pd3));
+		
+		pedidoRepository.saveAll(Arrays.asList(pd1, pd2, pd3));
+		pagamentoRepository.saveAll(Arrays.asList(pg1, pg2, pg3));
 	}
 
 }
