@@ -80,13 +80,7 @@ public class ProjetoLojaJavaApplication implements CommandLineRunner  {
 		
 		Cidade c1 = new Cidade(null, "Uberlandia", est1);
 		Cidade c2 = new Cidade(null, "Sao Paulo", est2);
-		Cidade c3 = new Cidade(null, "Osasco", est2);
-
-		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
-		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
-		estadoRepository.saveAll(Arrays.asList(est1, est2));
-		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
-		
+		Cidade c3 = new Cidade(null, "Osasco", est2);		
 
 		Cliente cl1 = new Cliente(null, "Ana Paula", "ana@gmail.com", "345.545.484-82", TipoCliente.PESSOAFISICA );
 		cl1.getTelefones().addAll(Arrays.asList("3455-8899", "94567-8965"));
@@ -110,6 +104,11 @@ public class ProjetoLojaJavaApplication implements CommandLineRunner  {
 		
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
+		
+		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
 		clienteRepository.saveAll(Arrays.asList(cl1, cl2));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
