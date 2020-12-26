@@ -19,7 +19,6 @@ import com.joaodanieljr.projetoLojaJava.dto.ClienteDTO;
 import com.joaodanieljr.projetoLojaJava.dto.ClienteNewDTO;
 import com.joaodanieljr.projetoLojaJava.exceptions.DataIntegrityException;
 import com.joaodanieljr.projetoLojaJava.exceptions.ObjectNotFoundException;
-import com.joaodanieljr.projetoLojaJava.repositories.CidadeRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.ClienteRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.EnderecoRepository;
 
