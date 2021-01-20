@@ -25,6 +25,7 @@ public class ClienteDTO implements Serializable{
 	@Email(message = "Email invalido")
 	private String email;
 	
+
 	public ClienteDTO() {
 	}
 	
@@ -57,8 +58,7 @@ public class ClienteDTO implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
 
 	
 }
