@@ -15,13 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.joaodanieljr.projetoLojaJava.domain.Cidade;
 import com.joaodanieljr.projetoLojaJava.domain.Cliente;
 import com.joaodanieljr.projetoLojaJava.domain.Endereco;
+import com.joaodanieljr.projetoLojaJava.domain.enums.Perfil;
 import com.joaodanieljr.projetoLojaJava.domain.enums.TipoCliente;
 import com.joaodanieljr.projetoLojaJava.dto.ClienteDTO;
 import com.joaodanieljr.projetoLojaJava.dto.ClienteNewDTO;
+import com.joaodanieljr.projetoLojaJava.exceptions.AuthorizationException;
 import com.joaodanieljr.projetoLojaJava.exceptions.DataIntegrityException;
 import com.joaodanieljr.projetoLojaJava.exceptions.ObjectNotFoundException;
 import com.joaodanieljr.projetoLojaJava.repositories.ClienteRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.EnderecoRepository;
+import com.joaodanieljr.projetoLojaJava.security.UserSS;
 
 @Service
 public class ClienteService {
@@ -36,6 +39,12 @@ public class ClienteService {
 	private BCryptPasswordEncoder pe;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 																"Objeto não encontrado! ID: " 
