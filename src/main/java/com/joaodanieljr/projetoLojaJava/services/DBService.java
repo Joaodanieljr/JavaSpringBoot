@@ -20,6 +20,7 @@ import com.joaodanieljr.projetoLojaJava.domain.PagamentoComCartao;
 import com.joaodanieljr.projetoLojaJava.domain.Pedido;
 import com.joaodanieljr.projetoLojaJava.domain.Produto;
 import com.joaodanieljr.projetoLojaJava.domain.enums.EstadoPagamento;
+import com.joaodanieljr.projetoLojaJava.domain.enums.Perfil;
 import com.joaodanieljr.projetoLojaJava.domain.enums.TipoCliente;
 import com.joaodanieljr.projetoLojaJava.repositories.CategoriaRepository;
 import com.joaodanieljr.projetoLojaJava.repositories.CidadeRepository;
@@ -121,10 +122,11 @@ public class DBService {
 			estadoRepository.saveAll(Arrays.asList(est1, est2));
 			cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 			
-			Cliente cli1 = new Cliente(null, "Maria Silva", "joaodanieljr@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
-
+			Cliente cli1 = new Cliente(null, "Joao", "joaodanieljr@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
 			cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
-
+			cli1.addPerfil(Perfil.ADMIN);
+			
+			
 			Cliente cli2 = new Cliente(null, "Ana Costa", "maria@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
 			cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
 
