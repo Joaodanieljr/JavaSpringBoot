@@ -56,6 +56,7 @@ public class Cliente implements Serializable {
 	@CollectionTable(name= "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 	}
@@ -185,7 +186,5 @@ public class Cliente implements Serializable {
 	}
 
 
-	
-	
 	
 }
